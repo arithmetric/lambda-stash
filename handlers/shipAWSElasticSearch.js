@@ -1,5 +1,5 @@
 var es;
-var config = {};
+var config;
 
 exports.config = function(_config) {
   config = _config;
@@ -26,11 +26,11 @@ exports.process = function(items) {
       docs.push(items[i]);
     }
     console.log('Preparing to ship ' + num + ' records to ElasticSearch.');
-    es.bulk({body: docs}, function(err, result) {
+    es.bulk({body: docs}, function(err /* , result */) {
       if (err) {
         return reject(err);
       }
-      resolve(result);
+      resolve(items);
     });
   });
 };
