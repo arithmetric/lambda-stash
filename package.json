@@ -4,7 +4,6 @@
   "description": "AWS Lambda script to ship S3 data to aggregators, like Elasticsearch.",
   "main": "index.js",
   "dependencies": {
-    "async": "^1.5.2",
     "aws-sdk": "^2.3.18",
     "csv-parse": "^1.1.1",
     "elasticsearch": "^11.0.1",

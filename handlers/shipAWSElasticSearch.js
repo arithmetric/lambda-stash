@@ -14,15 +14,23 @@ exports.config = function(_config) {
   });
 };
 
-exports.process = function(items, next) {
+exports.process = function(items) {
   console.log('shipAWSElasticSearch::process');
-  var num = items.length;
-  var i;
-  var docs = [];
-  for (i = 0; i < num; i++) {
-    docs.push({index: {_index: config.currentMapping.index, _type: config.currentMapping.type}});
-    docs.push(items[i]);
-  }
-  console.log('Preparing to ship ' + num + ' records to ElasticSearch.');
-  es.bulk({body: docs}, next);
+
+  return new Promise(function(resolve, reject) {
+    var num = items.length;
+    var i;
+    var docs = [];
+    for (i = 0; i < num; i++) {
+      docs.push({index: {_index: config.currentMapping.index, _type: config.currentMapping.type}});
+      docs.push(items[i]);
+    }
+    console.log('Preparing to ship ' + num + ' records to ElasticSearch.');
+    es.bulk({body: docs}, function(err, result) {
+      if (err) {
+        return reject(err);
+      }
+      resolve(result);
+    });
+  });
 };
