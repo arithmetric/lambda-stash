@@ -1,0 +1,26 @@
+{
+  "name": "s3stash",
+  "version": "1.0.0",
+  "description": "AWS Lambda script to ship S3 data to aggregators, like Elasticsearch.",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^1.5.2",
+    "aws-sdk": "^2.3.18",
+    "csv-parse": "^1.1.1",
+    "elasticsearch": "^11.0.1",
+    "http-aws-es": "tphummel/http-aws-es"
+  },
+  "devDependencies": {
+    "eslint": "^2.11.1",
+    "eslint-config-google": "^0.5.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Joe Turgeon",
+    "email": "arithmetric@gmail.com"
+  },
+  "license": "MIT"
+}
