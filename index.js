@@ -30,15 +30,22 @@ exports.handler = function(event, context, callback) {
   };
 
   var tasks = [fetchFromS3];
+  var i;
+  var num;
 
-  if (config.mapping.hasOwnProperty(srcBucket)) {
-    config.currentMapping = config.mapping[srcBucket];
-    console.log('Selected mapping:', config.currentMapping);
+  if (config.mappings) {
+    num = config.mappings.length;
+    for (i = 0; i < num; i++) {
+      if (config.mappings[i].bucket === srcBucket) {
+        config.currentMapping = config.mappings[i];
+        console.log('Selected mapping for S3 event:', config.currentMapping);
+        break;
+      }
+    }
   }
 
   if (config.currentMapping && config.currentMapping.hasOwnProperty('processors')) {
-    var i;
-    var num = config.currentMapping.processors.length;
+    num = config.currentMapping.processors.length;
     for (i = 0; i < num; i++) {
       var processor = require('./handlers/' + config.currentMapping.processors[i]);
       if (processor) {
@@ -46,13 +53,15 @@ exports.handler = function(event, context, callback) {
           processor.config(config);
         }
         tasks.push(processor.process);
+      } else {
+        throw new Error('Could not load processor: ' + config.currentMapping.processors[i]);
       }
     }
   }
 
   if (tasks.length < 2) {
-    console.log('S3 notification did not match any mappings.');
-    return callback(null);
+    console.log('S3 event did not match any mappings.');
+    return callback(null, 'S3 event did not match any mappings.');
   }
 
   console.log('Starting to run processor tasks...');
