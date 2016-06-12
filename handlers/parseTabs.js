@@ -1,9 +1,9 @@
 var parse = require('csv-parse');
 
-exports.process = function(item) {
+exports.process = function(config) {
   console.log('parseTabs::process');
   return new Promise(function(resolve, reject) {
-    parse(item, {
+    parse(config.data, {
       delimiter: '\t',
       relax_column_count: true,
       trim: true
@@ -11,7 +11,8 @@ exports.process = function(item) {
       if (err) {
         return reject(err);
       }
-      resolve(data);
+      config.data = data;
+      resolve(config);
     });
   });
 };

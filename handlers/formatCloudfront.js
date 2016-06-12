@@ -1,15 +1,9 @@
-var config;
-
-exports.config = function(_config) {
-  config = _config;
-};
-
-exports.process = function(rows) {
+exports.process = function(config) {
   console.log('formatCloudfront::process');
 
   var output = [];
   var fields = [];
-  var numRows = rows.length;
+  var numRows = config.data.length;
   var numCols;
   var i;
   var j;
@@ -18,7 +12,7 @@ exports.process = function(rows) {
   var label;
 
   for (i = 0; i < numRows; i++) {
-    row = rows[i];
+    row = config.data[i];
     numCols = row.length;
     if (numCols === 1) {
       row = row[0];
@@ -42,6 +36,6 @@ exports.process = function(rows) {
       output.push(item);
     }
   }
-
-  return Promise.resolve(output);
+  config.data = output;
+  return Promise.resolve(config);
 };

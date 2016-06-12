@@ -40,9 +40,6 @@ exports.handler = function(event, context, callback) {
   for (i = 0; i < num; i++) {
     var processor = require('./handlers/' + taskNames[i]);
     if (processor) {
-      if (processor.config) {
-        processor.config(config);
-      }
       tasks.push(processor.process);
     } else {
       throw new Error('Could not load processor: ' + taskNames[i]);
@@ -51,15 +48,14 @@ exports.handler = function(event, context, callback) {
 
   console.log('Starting to run processor tasks...');
 
-  var promiseSeries = function(promises) {
-    var p = Promise.resolve();
-    return promises.reduce(function(previous, fn) {
-      return previous.then(fn);
-    }, p);
+  var promiseSeries = function(promises, initValue) {
+    return promises.reduce(function(chain, promise) {
+      return chain.then(promise);
+    }, Promise.resolve(initValue));
   };
 
-  promiseSeries(tasks)
-    .then(function() {
+  promiseSeries(tasks, config)
+    .then(function(/* config */) {
       console.log('Successfully shipped data!');
       callback(null, 'Successfully shipped data!');
     })

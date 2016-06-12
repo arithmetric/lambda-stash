@@ -1,27 +1,21 @@
-var config;
-
-exports.config = function(_config) {
-  config = _config;
-};
-
-exports.process = function(data) {
+exports.process = function(config) {
   console.log('formatConfig::process');
 
-  if (!data || !data.hasOwnProperty('configurationItems') || (!data.configurationItems.length && data.configurationItems.length !== 0)) {
-    return Promise.reject('Received unexpected AWS Config JSON format:' + JSON.stringify(data));
+  if (!config.data || !config.data.hasOwnProperty('configurationItems') || (!config.data.configurationItems.length && config.data.configurationItems.length !== 0)) {
+    return Promise.reject('Received unexpected AWS Config JSON format:' + JSON.stringify(config.data));
   }
 
   var items = [];
-  var num = data.configurationItems.length;
+  var num = config.data.configurationItems.length;
   var i;
   var item;
   for (i = 0; i < num; i++) {
-    item = data.configurationItems[i];
+    item = config.data.configurationItems[i];
     if (config.currentMapping.dateField && config.currentMapping.dateField !== 'resourceCreationTime') {
       item[config.currentMapping.dateField] = item.resourceCreationTime;
     }
     items.push(item);
   }
-
-  return Promise.resolve(items);
+  config.data = items;
+  return Promise.resolve(config);
 };

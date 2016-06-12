@@ -1,20 +1,16 @@
-var config;
 const net = require('net');
 
-exports.config = function(_config) {
-  config = _config;
-};
-
-exports.process = function(data) {
+exports.process = function(config) {
   console.log('shipTcp::process');
 
   var finished = false;
   return new Promise(function(resolve, reject) {
     var client = net.connect(config.tcp.port, config.tcp.host, function() {
-      client.write(data, function() {
+      var keyData = config.tcp.hasOwnProperty('keyData') ? config.tcp.keyData : 'data';
+      client.write(config[keyData], function() {
         finished = true;
         client.end();
-        resolve(data);
+        resolve(config);
       });
     });
     client.on('close', function() {

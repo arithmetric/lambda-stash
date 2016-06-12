@@ -1,10 +1,9 @@
-exports.process = function(item) {
+exports.process = function(config) {
   console.log('parseJson::process');
-  var data;
   try {
-    data = JSON.parse(item.toString());
+    config.data = JSON.parse(config.data);
   } catch (err) {
     return Promise.reject('Unable to parse JSON: ' + err);
   }
-  return Promise.resolve(data);
+  return Promise.resolve(config);
 };

@@ -1,13 +1,7 @@
-var config;
-
-exports.config = function(_config) {
-  config = _config;
-};
-
-exports.process = function(items) {
+exports.process = function(config) {
   console.log('convertString::process');
 
-  var num = items.length;
+  var num = config.data.length;
   var i;
   var data = '';
   var key;
@@ -18,10 +12,10 @@ exports.process = function(items) {
       data += config.currentMapping.string.prefix + ' ';
     }
 
-    for (key in items[i]) {
-      if (items[i].hasOwnProperty(key)) {
+    for (key in config.data[i]) {
+      if (config.data[i].hasOwnProperty(key)) {
         keyStr = key.replace('-', '_').replace(/\W/g, '');
-        data += keyStr + '="' + items[i][key] + '" ';
+        data += keyStr + '="' + config.data[i][key] + '" ';
       }
     }
 
@@ -31,6 +25,6 @@ exports.process = function(items) {
 
     data += '\n';
   }
-
-  return Promise.resolve(data);
+  config.data = data;
+  return Promise.resolve(config);
 };

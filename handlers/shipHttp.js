@@ -1,12 +1,7 @@
-var config;
-var http = require('http');
-var url = require('url');
+const http = require('http');
+const url = require('url');
 
-exports.config = function(_config) {
-  config = _config;
-};
-
-exports.process = function(data) {
+exports.process = function(config) {
   console.log('shipHttp::process');
 
   return new Promise(function(resolve, reject) {
@@ -15,14 +10,15 @@ exports.process = function(data) {
 
     var req = http.request(options, function(res) {
       console.log('Received HTTP response status code: ' + res.statusCode);
-      resolve(data);
+      resolve(config);
     });
 
     req.on('error', function(err) {
       reject('An error occurred when making an HTTP request: ' + err);
     });
 
-    req.write(data);
+    var keyData = config.currentMapping.http.hasOwnProperty('keyData') ? config.currentMapping.http.keyData : 'data';
+    req.write(config[keyData]);
     req.end();
   });
 };

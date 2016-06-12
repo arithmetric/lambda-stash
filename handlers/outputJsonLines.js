@@ -1,7 +1,7 @@
-exports.process = function(items) {
+exports.process = function(config) {
   console.log('outputJsonLines::process');
-  var data = items.reduce(function(str, item) {
+  config.data = config.data.reduce(function(str, item) {
     return str + JSON.stringify(item) + '\n';
   }, '');
-  return Promise.resolve(data);
+  return Promise.resolve(config);
 };
