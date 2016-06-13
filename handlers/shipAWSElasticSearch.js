@@ -16,7 +16,7 @@ exports.process = function(config) {
     var i;
     var docs = [];
     for (i = 0; i < num; i++) {
-      docs.push({index: {_index: config.currentMapping.index, _type: config.currentMapping.type}});
+      docs.push({index: {_index: config.elasticsearch.index, _type: config.elasticsearch.type}});
       docs.push(config.data[i]);
     }
     console.log('Preparing to ship ' + num + ' records to ElasticSearch.');

@@ -11,8 +11,8 @@ exports.process = function(config) {
   var item;
   for (i = 0; i < num; i++) {
     item = config.data.Records[i];
-    if (config.currentMapping.dateField && config.currentMapping.dateField !== 'eventTime') {
-      item[config.currentMapping.dateField] = item.eventTime;
+    if (config.dateField && config.dateField !== 'eventTime') {
+      item[config.dateField] = item.eventTime;
     }
     items.push(item);
   }

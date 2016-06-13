@@ -27,11 +27,11 @@ exports.process = function(config) {
         label = (j < fields.length) ? fields[j] : String(j);
         item[label] = row[j];
       }
-      if (config.currentMapping.dateField === 'date') {
+      if (config.dateField === 'date') {
         item.originalDate = item.date;
       }
-      if (config.currentMapping.dateField) {
-        item[config.currentMapping.dateField] = item.date + 'T' + item.time;
+      if (config.dateField) {
+        item[config.dateField] = item.date + 'T' + item.time;
       }
       output.push(item);
     }

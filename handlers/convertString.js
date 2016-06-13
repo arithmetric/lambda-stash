@@ -8,8 +8,8 @@ exports.process = function(config) {
   var keyStr;
 
   for (i = 0; i < num; i++) {
-    if (config.currentMapping.string && config.currentMapping.string.prefix) {
-      data += config.currentMapping.string.prefix + ' ';
+    if (config.string && config.string.prefix) {
+      data += config.string.prefix + ' ';
     }
 
     for (key in config.data[i]) {
@@ -19,8 +19,8 @@ exports.process = function(config) {
       }
     }
 
-    if (config.currentMapping.string && config.currentMapping.string.suffix) {
-      data += ' ' + config.currentMapping.string.suffix;
+    if (config.string && config.string.suffix) {
+      data += ' ' + config.string.suffix;
     }
 
     data += '\n';

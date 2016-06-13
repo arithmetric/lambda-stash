@@ -5,7 +5,7 @@ exports.process = function(config) {
   console.log('shipHttp::process');
 
   return new Promise(function(resolve, reject) {
-    var options = url.parse(config.currentMapping.http.url);
+    var options = url.parse(config.http.url);
     options.method = 'POST';
 
     var req = http.request(options, function(res) {
@@ -17,7 +17,7 @@ exports.process = function(config) {
       reject('An error occurred when making an HTTP request: ' + err);
     });
 
-    var keyData = config.currentMapping.http.hasOwnProperty('keyData') ? config.currentMapping.http.keyData : 'data';
+    var keyData = config.http.hasOwnProperty('keyData') ? config.http.keyData : 'data';
     req.write(config[keyData]);
     req.end();
   });

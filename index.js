@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 var config;
 
 exports.setConfig = function(_config) {
@@ -15,19 +17,22 @@ exports.handler = function(event, context, callback) {
   var tasks = [];
   var i;
   var num;
+  var currentMapping;
 
   if (config.mappings) {
     num = config.mappings.length;
     for (i = 0; i < num; i++) {
       if (config.mappings[i].bucket === config.S3.srcBucket) {
-        config.currentMapping = config.mappings[i];
-        if (config.currentMapping && config.currentMapping.hasOwnProperty('processors')) {
-          taskNames = taskNames.concat(config.currentMapping.processors);
+        currentMapping = config.mappings[i];
+        if (currentMapping && currentMapping.hasOwnProperty('processors')) {
+          taskNames = taskNames.concat(currentMapping.processors);
         }
-        console.log('Selected mapping for S3 event:', config.currentMapping);
+        console.log('Selected mapping for S3 event:', currentMapping);
+        config = _.merge({}, config, currentMapping);
         break;
       }
     }
+    delete config.mappings;
   }
 
   num = taskNames.length;

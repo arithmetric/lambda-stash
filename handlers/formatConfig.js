@@ -11,8 +11,8 @@ exports.process = function(config) {
   var item;
   for (i = 0; i < num; i++) {
     item = config.data.configurationItems[i];
-    if (config.currentMapping.dateField && config.currentMapping.dateField !== 'resourceCreationTime') {
-      item[config.currentMapping.dateField] = item.resourceCreationTime;
+    if (config.dateField && config.dateField !== 'resourceCreationTime') {
+      item[config.dateField] = item.resourceCreationTime;
     }
     items.push(item);
   }
