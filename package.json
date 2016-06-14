@@ -1,7 +1,7 @@
 {
-  "name": "s3stash",
+  "name": "lambda-stash",
   "version": "1.0.0",
-  "description": "AWS Lambda script to ship S3 data to aggregators, like Elasticsearch.",
+  "description": "AWS Lambda script to ship data from S3 to other data stores, like Elasticsearch.",
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.3.18",
@@ -13,6 +13,9 @@
   "devDependencies": {
     "eslint": "^2.11.1",
     "eslint-config-google": "^0.5.0"
+  },
+  "engines": {
+    "node": ">=4.0"
   },
   "scripts": {
     "lint": "eslint .",
