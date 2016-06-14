@@ -2,8 +2,7 @@ const http = require('http');
 const url = require('url');
 
 exports.process = function(config) {
-  console.log('shipHttp::process');
-
+  console.log('shipHttp');
   return new Promise(function(resolve, reject) {
     var options = url.parse(config.http.url);
     options.method = 'POST';
@@ -17,7 +16,8 @@ exports.process = function(config) {
       reject('An error occurred when making an HTTP request: ' + err);
     });
 
-    var keyData = config.http.hasOwnProperty('keyData') ? config.http.keyData : 'data';
+    var keyData = config.http.hasOwnProperty('keyData') ?
+      config.http.keyData : 'data';
     req.write(config[keyData]);
     req.end();
   });

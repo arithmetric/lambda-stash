@@ -2,8 +2,7 @@ var aws = require('aws-sdk');
 var s3 = new aws.S3();
 
 exports.process = function(config) {
-  console.log('getS3Object::process');
-
+  console.log('getS3Object');
   return new Promise(function(resolve, reject) {
     s3.getObject({
       Bucket: config.S3.srcBucket,

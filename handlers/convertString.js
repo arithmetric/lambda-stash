@@ -1,6 +1,5 @@
 exports.process = function(config) {
-  console.log('convertString::process');
-
+  console.log('convertString');
   var num = config.data.length;
   var i;
   var data = '';

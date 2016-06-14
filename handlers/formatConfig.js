@@ -1,8 +1,12 @@
-exports.process = function(config) {
-  console.log('formatConfig::process');
+var _ = require('lodash');
 
-  if (!config.data || !config.data.hasOwnProperty('configurationItems') || (!config.data.configurationItems.length && config.data.configurationItems.length !== 0)) {
-    return Promise.reject('Received unexpected AWS Config JSON format:' + JSON.stringify(config.data));
+exports.process = function(config) {
+  console.log('formatConfig');
+  if (!config.data ||
+      !config.data.hasOwnProperty('configurationItems') ||
+      _.isNil(config.data.configurationItems.length)) {
+    return Promise.reject('Received unexpected AWS Config JSON format:' +
+      JSON.stringify(config.data));
   }
 
   var items = [];

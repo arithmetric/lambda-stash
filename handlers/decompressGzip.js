@@ -1,7 +1,7 @@
 var zlib = require('zlib');
 
 exports.process = function(config) {
-  console.log('decompressGzip::process');
+  console.log('decompressGzip');
   return new Promise(function(resolve, reject) {
     zlib.gunzip(config.data, function(err, result) {
       if (err) {

@@ -11,7 +11,8 @@ exports.handler = function(event, context, callback) {
     srcBucket: event.Records[0].s3.bucket.name,
     srcKey: event.Records[0].s3.object.key
   };
-  console.log('Handling event for s3://' + config.S3.srcBucket + '/' + config.S3.srcKey);
+  console.log('Handling event for s3://' + config.S3.srcBucket + '/' +
+    config.S3.srcKey);
 
   var taskNames = ['getS3Object'];
   var tasks = [];

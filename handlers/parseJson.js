@@ -1,5 +1,5 @@
 exports.process = function(config) {
-  console.log('parseJson::process');
+  console.log('parseJson');
   try {
     config.data = JSON.parse(config.data);
   } catch (err) {

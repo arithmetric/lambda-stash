@@ -1,8 +1,10 @@
 exports.process = function(config) {
-  console.log('formatCloudtrail::process');
-
-  if (!config.data || !config.data.hasOwnProperty('Records') || (!config.data.Records.length && config.data.Records.length !== 0)) {
-    return Promise.reject('Received unexpected CloudTrail JSON format:' + JSON.stringify(config.data));
+  console.log('formatCloudtrail');
+  if (!config.data ||
+      !config.data.hasOwnProperty('Records') ||
+      (!config.data.Records.length && config.data.Records.length !== 0)) {
+    return Promise.reject('Received unexpected CloudTrail JSON format:' +
+      JSON.stringify(config.data));
   }
 
   var items = [];
