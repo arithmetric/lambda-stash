@@ -1,5 +1,11 @@
+var _ = require('lodash');
+
 exports.process = function(config) {
   console.log('convertString');
+  if (!_.isArray(config.data)) {
+    return Promise.reject('Non-array data passed to convertString.');
+  }
+
   var num = config.data.length;
   var i;
   var data = '';
