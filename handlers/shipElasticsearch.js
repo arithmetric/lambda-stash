@@ -1,5 +1,5 @@
 exports.process = function(config) {
-  console.log('shipAWSElasticSearch');
+  console.log('shipElasticsearch');
   return new Promise(function(resolve, reject) {
     var esConfig = {
       host: config.elasticsearch.host
@@ -31,7 +31,7 @@ exports.process = function(config) {
       });
       docs.push(config.data[i]);
     }
-    console.log('Preparing to ship ' + num + ' records to ElasticSearch.');
+    console.log('Preparing to ship ' + num + ' records to Elasticsearch.');
     es.bulk({body: docs}, function(err /* , result */) {
       return (err) ? reject(err) : resolve(config);
     });
