@@ -6,30 +6,22 @@ exports.process = function(config) {
     return Promise.reject('Non-array data passed to convertString.');
   }
 
-  var num = config.data.length;
-  var i;
-  var data = '';
-  var key;
-  var keyStr;
+  config.data = _.map(config.data, function(datum) {
+    var parts = _.map(datum, function(value, key) {
+      key = key.replace('-', '_').replace(/\W/g, '');
+      return key + '="' + value + '"';
+    });
 
-  for (i = 0; i < num; i++) {
     if (config.string && config.string.prefix) {
-      data += config.string.prefix + ' ';
-    }
-
-    for (key in config.data[i]) {
-      if (config.data[i].hasOwnProperty(key)) {
-        keyStr = key.replace('-', '_').replace(/\W/g, '');
-        data += keyStr + '="' + config.data[i][key] + '" ';
-      }
+      parts.unshift(config.string.prefix);
     }
 
     if (config.string && config.string.suffix) {
-      data += ' ' + config.string.suffix;
+      parts.push(config.string.suffix);
     }
 
-    data += '\n';
-  }
-  config.data = data;
+    return parts.join(' ') + '\n';
+  }).join('');
+
   return Promise.resolve(config);
 };
