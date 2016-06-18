@@ -1,0 +1,10 @@
+{
+  "name": "lambda-stash-example",
+  "version": "1.0.0",
+  "description": "Example deployment package for lambda-stash to AWS Lambda.",
+  "main": "index.js",
+  "dependencies": {
+    "lambda-stash": "*"
+  },
+  "private": true
+}
