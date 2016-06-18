@@ -12,17 +12,17 @@ exports.process = function(config) {
     esConfig.amazonES = {
       region: config.elasticsearch.region
     };
-    if (config.elasticsearch.useEnvCreds) {
-      var AWS = require('aws-sdk');
-      esConfig.amazonES.credentials = new AWS.EnvironmentCredentials('AWS');
-    } else if (config.elasticsearch.accessKey &&
+    if (config.elasticsearch.accessKey &&
         config.elasticsearch.secretKey) {
       esConfig.amazonES.accessKey = config.elasticsearch.accessKey;
       esConfig.amazonES.secretKey = config.elasticsearch.secretKey;
+    } else {
+      var AWS = require('aws-sdk');
+      esConfig.amazonES.credentials = new AWS.EnvironmentCredentials('AWS');
     }
   }
 
-  var es = config.drivers.ES || require('elasticsearch').Client(esConfig); // eslint-disable-line new-cap
+  var es = require('elasticsearch').Client(esConfig); // eslint-disable-line new-cap
   var docs = [];
   var maxChunkSize = config.elasticsearch.maxChunkSize || 1000;
   var promises = [];
@@ -31,8 +31,13 @@ exports.process = function(config) {
     console.log('Preparing to ship ' + (docs.length / 2) +
       ' records to Elasticsearch.');
     return new Promise(function(resolve, reject) {
-      es.bulk({body: docs}, function(err /* , result */) {
-        return (err) ? reject(err) : resolve();
+      es.bulk({body: docs}, function(err, result) {
+        if (err) {
+          return reject(err);
+        } else if (result.errors) {
+          return reject(result);
+        }
+        resolve();
       });
     });
   };

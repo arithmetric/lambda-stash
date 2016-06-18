@@ -26,10 +26,10 @@ exports.process = function(config) {
         label = (j < fields.length) ? fields[j] : String(j);
         item[label] = row[j];
       }
-      if (config.dateField === 'date') {
-        item.originalDate = item.date;
-      }
       if (config.dateField) {
+        if (config.dateField === 'date') {
+          item.originalDate = item.date;
+        }
         item[config.dateField] = item.date + 'T' + item.time;
       }
       output.push(item);
