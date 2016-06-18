@@ -1,0 +1,1 @@
+{"messageType":"DATA_MESSAGE","owner":"1234567890","logGroup":"/aws/lambda/LambdaStashTest","logStream":"2016/06/18/[$LATEST]1234567890abcdef","subscriptionFilters":["LambdaStashTest-Filter"],"logEvents":[{"id":"1234567890","timestamp":1466263061409,"message":"START RequestId: abcdef-1234-5678-9012-abcdef Version: $LATEST\n"}]}

@@ -1,0 +1,12 @@
+{
+  "Records": [
+    {
+      "eventTime": "2016-06-16T14:19:13Z",
+      "key1": "value1"
+    },
+    {
+      "eventTime": "2016-06-16T14:19:57Z",
+      "key1": "value2"
+    }
+  ]
+}

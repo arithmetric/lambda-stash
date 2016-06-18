@@ -1,0 +1,7 @@
+[
+  ["#Fields: date time col1 col2"],
+  ["2016-03-23", "03:23:16", "val1", "val2", "extra1"],
+  ["2016-06-16", "14:01:02", "val3", "val4", "extra2"],
+  ["#ignore this line"],
+  []
+]

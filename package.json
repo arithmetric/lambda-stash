@@ -11,15 +11,19 @@
     "lodash": "^4.13.1"
   },
   "devDependencies": {
+    "coveralls": "^2.11.9",
     "eslint": "^2.11.1",
-    "eslint-config-google": "^0.5.0"
+    "eslint-config-google": "^0.6.0",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3"
   },
   "engines": {
     "node": ">=4.0"
   },
   "scripts": {
+    "check-coverage": "istanbul check-coverage --statements 100",
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "istanbul cover _mocha -- --check-leaks --timeout 5000"
   },
   "author": {
     "name": "Joe Turgeon",
