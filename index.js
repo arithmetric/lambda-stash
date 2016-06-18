@@ -2,16 +2,28 @@ var _ = require('lodash');
 
 exports.handler = function(config, event, context, callback) {
   var taskNames = [];
+  var eventType = '';
 
-  config.S3 = {
-    srcBucket: event.Records[0].s3.bucket.name,
-    srcKey: event.Records[0].s3.object.key
-  };
-  console.log('Handling event for s3://' + config.S3.srcBucket + '/' +
-    config.S3.srcKey);
+  if (event.hasOwnProperty('Records') && event.Records.length &&
+      event.Records[0].eventSource === 'aws:s3') {
+    config.S3 = {
+      srcBucket: event.Records[0].s3.bucket.name,
+      srcKey: event.Records[0].s3.object.key
+    };
+    eventType = 'S3';
+    taskNames.push('getS3Object');
+    console.log('Handling event for s3://' + config.S3.srcBucket + '/' +
+      config.S3.srcKey);
+  } else if (event.hasOwnProperty('awslogs') &&
+      event.awslogs.hasOwnProperty('data')) {
+    config.data = event.awslogs.data;
+    eventType = 'CloudWatch';
+    taskNames.push('decodeBase64');
+    taskNames.push('decompressGzip');
+    taskNames.push('parseJson');
+    console.log('Handling event for CloudWatch logs');
+  }
 
-  var taskNames = ['getS3Object'];
-  var tasks = [];
   var currentMapping;
   if (config.mappings) {
     _.some(config.mappings, function(item) {
