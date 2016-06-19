@@ -44,7 +44,7 @@ exports.process = function(config) {
     } else {
       item.logType = 'message';
       parts = item.message.match(/^(.*)\t(.*)\t((.|\n)*)/m);
-      if (parts && parts.length === 4) {
+      if (parts && parts.length === 5) {
         item.requestId = parts[2];
         item.message = parts[3];
       }
