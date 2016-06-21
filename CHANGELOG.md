@@ -1,5 +1,9 @@
 # Change Log for lambda-stash
 
+## 1.0.2 [2016/06/21]
+
+- Improving test coverage.
+
 ## 1.0.1 [2016/06/19]
 
 - Fixing parsing of CloudWatch Log messages.
