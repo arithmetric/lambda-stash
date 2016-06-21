@@ -1,0 +1,47 @@
+[
+  {
+    "id":"1234567890",
+    "timestamp":1466263061409,
+    "message":"START RequestId: abcdef-1234-5678-9012-abcdef Version: $LATEST\n",
+    "logType": "start",
+    "requestId": "abcdef-1234-5678-9012-abcdef",
+    "lambdaVersion": "$LATEST",
+    "date": "2016-06-18T15:17:41.409Z"
+  },
+  {
+    "id":"1234567891",
+    "timestamp":1466263061419,
+    "date": "2016-06-18T15:17:41.419Z",
+    "requestId": "abcdef-1234-5678-9012-abcdef",
+    "logType": "message",
+    "message":"Example log message 1\n"
+  },
+  {
+    "id":"1234567892",
+    "timestamp":1466263061429,
+    "date": "2016-06-18T15:17:41.429Z",
+    "requestId": "abcdef-1234-5678-9012-abcdef",
+    "logType": "message",
+    "message":"Example log message 2\nLine 2\n"
+  },
+  {
+    "id":"1234567893",
+    "timestamp":1466263061439,
+    "date": "2016-06-18T15:17:41.439Z",
+    "requestId": "abcdef-1234-5678-9012-abcdef",
+    "logType": "end",
+    "message":"END RequestId: abcdef-1234-5678-9012-abcdef\n"
+  },
+  {
+    "id":"1234567894",
+    "timestamp":1466263061449,
+    "date": "2016-06-18T15:17:41.449Z",
+    "requestId": "abcdef-1234-5678-9012-abcdef",
+    "logType": "report",
+    "duration": "432.10",
+    "durationBilled": "500",
+    "memConfigured": "256",
+    "memUsed": "123",
+    "message":"REPORT RequestId: abcdef-1234-5678-9012-abcdef\tDuration: 432.10 ms\tBilled Duration: 500 ms \tMemory Size: 256 MB\tMax Memory Used: 123 MB\n"
+  }
+]
