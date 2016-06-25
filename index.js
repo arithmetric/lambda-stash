@@ -50,6 +50,11 @@ exports.handler = function(config, event, context, callback) {
   var tasks = [];
   var processor;
   _.some(taskNames, function(taskName) {
+    if (_.isFunction(taskName)) {
+      tasks.push(taskName);
+      return false;
+    }
+
     try {
       processor = require('./handlers/' + taskName);
     } catch (err) {

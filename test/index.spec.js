@@ -70,7 +70,9 @@ describe('index.js', function() {
           mappings: [
             {
               type: 'CloudWatch',
-              processors: ['shipElasticsearch']
+              processors: [
+                'shipElasticsearch'
+              ]
             }
           ]
         };
@@ -88,6 +90,58 @@ describe('index.js', function() {
         shipElasticsearch.process = function(config) {
           assert.deepStrictEqual(config.data, dataJson,
             'CloudWatch Log is parsed');
+          done();
+        };
+        index.handler(config, event, context, callback);
+      });
+
+    it('handles a custom handler provided as a function',
+      function(done) {
+        var AWS = require('aws-sdk');
+        AWS.S3 = function() {
+          return {
+            getObject: function(params, callback) {
+              assert.strictEqual(params.Bucket, 'source-bucket',
+                'S3.getObject invoked with correct S3 bucket');
+              callback(null, {Body: '{"status": "successful-response"}'});
+            }
+          };
+        };
+        var ranCustomHandler = false;
+        var customHandler = function(config) {
+          console.log('customHandler');
+          ranCustomHandler = true;
+          return Promise.resolve(config);
+        };
+        var config = {
+          mappings: [
+            {
+              bucket: 'source-bucket',
+              processors: [
+                customHandler
+              ]
+            }
+          ]
+        };
+        var event = {
+          Records: [
+            {
+              eventSource: 'aws:s3',
+              s3: {
+                bucket: {
+                  name: 'source-bucket'
+                },
+                object: {
+                  key: 'source/key'
+                }
+              }
+            }
+          ]
+        };
+        var context = {};
+        var callback = function(err /* , result */) {
+          assert.ok(!err, 'no error is given');
+          assert.ok(ranCustomHandler, 'custom handler was run');
           done();
         };
         index.handler(config, event, context, callback);
