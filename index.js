@@ -27,9 +27,9 @@ exports.handler = function(config, event, context, callback) {
   var currentMapping;
   if (config.mappings) {
     _.some(config.mappings, function(item) {
-      // Added a keyPrefix option
       if (item.type === eventType ||
-          ((config.S3 && item.bucket === config.S3.srcBucket) && ( !item.keyPrefix || config.S3.srcKey.startsWith(item.keyPrefix) ))) {
+          ((config.S3 && item.bucket === config.S3.srcBucket)
+              && ( !item.keyPrefix || config.S3.srcKey.startsWith(item.keyPrefix) ))) {
         currentMapping = item;
         console.log('Selected mapping for S3 event:', item);
         if (item.hasOwnProperty('processors')) {
@@ -51,6 +51,11 @@ exports.handler = function(config, event, context, callback) {
   var tasks = [];
   var processor;
   _.some(taskNames, function(taskName) {
+    if (_.isFunction(taskName)) {
+      tasks.push(taskName);
+      return false;
+    }
+
     try {
       processor = require('./handlers/' + taskName);
     } catch (err) {
