@@ -1,5 +1,9 @@
 # Change Log for lambda-stash
 
+## 1.1.0 [2017/01/20]
+
+- Allowing custom handlers to be provided through the configuration script.
+
 ## 1.0.2 [2016/06/21]
 
 - Improving test coverage.
