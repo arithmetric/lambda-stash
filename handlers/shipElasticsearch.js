@@ -43,7 +43,6 @@ exports.process = function(config) {
   };
 
   _.forEach(config.data, function(datum) {
-
     var indexName = config.elasticsearch.index;
 
     // if date is available, build dynamic index: [index]-YYYY.MM.DD
