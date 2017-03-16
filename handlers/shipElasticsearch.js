@@ -46,7 +46,7 @@ exports.process = function(config) {
     var indexName = config.elasticsearch.index;
 
     // if date is available, build dynamic index: [index]-YYYY.MM.DD
-    if (config.dateField) {
+    if (config.dateField && datum[config.dateField]) {
       var timestamp = new Date(datum[config.dateField]);
       indexName = [
         indexName + '-' + timestamp.getUTCFullYear(),    // year
