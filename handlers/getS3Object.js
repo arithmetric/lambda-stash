@@ -5,7 +5,7 @@ exports.process = function(config) {
     var s3 = new AWS.S3();
     s3.getObject({
       Bucket: config.S3.srcBucket,
-      Key: config.S3.srcKey
+      Key: decodeURIComponent(config.S3.srcKey)
     }, function(err, result) {
       if (err) {
         return reject(err);
