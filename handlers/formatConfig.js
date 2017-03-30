@@ -2,6 +2,9 @@ var _ = require('lodash');
 
 exports.process = function(config) {
   console.log('formatConfig');
+
+
+
   if (!config.data ||
       !config.data.hasOwnProperty('configurationItems') ||
       _.isNil(config.data.configurationItems.length)) {
