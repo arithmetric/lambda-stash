@@ -43,10 +43,16 @@ exports.process = function(config) {
       }
     } else {
       item.logType = 'message';
-      parts = item.message.match(/^(.*)\t(.*)\t((.|\n)*)/m);
+
+      // Python example:
+      // [INFO] 2017-06-13T10:54:39.503Z b29b4907-5026-11e7-855f-59ffc1dcaf21 Foo bar
+      // NodeJS example:
+      // 2017-06-13T10:57:52.368Z 25366d69-5027-11e7-9457-fd093c196800 Foo bar
+      parts = item.message.match(/^(?:\[(\w+)\]\t)?(.*)\t(.*)\t(.*)$/m);
       if (parts && parts.length === 5) {
-        item.requestId = parts[2];
-        item.message = parts[3];
+        item.logLevel = parts[1];
+        item.requestId = parts[3];
+        item.message = parts[4];
       }
     }
 
