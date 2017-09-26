@@ -7,6 +7,10 @@ exports.process = function(config) {
     host: config.elasticsearch.host
   };
 
+  if (config.elasticsearch.httpAuth) {
+    esConfig.httpAuth = config.elasticsearch.httpAuth;
+  }
+
   if (config.elasticsearch.useAWS) {
     esConfig.connectionClass = require('http-aws-es');
     esConfig.amazonES = {
