@@ -46,7 +46,12 @@ exports.handler = function(config, event, context, callback) {
     return callback(null, 'Event did not match any mappings.');
   }
 
-  console.log('Running ' + taskNames.length + ' handlers with config:', config);
+  
+  _config = JSON.parse(JSON.stringify(config)) // Deep clone object to prevent modifying the real config.httpAuth key
+  if (_config.elasticsearch.httpAuth) {
+    _config.elasticsearch.httpAuth = "*****"
+  }
+  console.log('Running ' + taskNames.length + ' handlers with _config:', _config);
   var tasks = [];
   var processor;
   _.some(taskNames, function(taskName) {

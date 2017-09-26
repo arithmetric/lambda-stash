@@ -12,6 +12,33 @@ describe('handler/shipElasticsearch.js', function() {
       handler = require('../handlers/shipElasticsearch');
     });
 
+    it('should allow http auth',
+      function(done) {
+        var config = {
+          elasticsearch: {
+            httpAuth: 'asdf:wut',
+            index: 'index',
+            type: 'type'
+          },
+          data: [
+            {
+              value: '1'
+            },
+            {
+              value: '2'
+            }
+          ],
+          test: 'test'
+        };
+        var es = require('elasticsearch');
+        es.Client = function(config) {
+          assert.strictEqual(config.httpAuth, 'asdf:wut',
+            'httpAuth param provided');
+          done();
+        };
+        handler.process(config);
+      });
+
     it('should split data by the maxChunkSize',
       function(done) {
         var passVal1 = false;
@@ -19,6 +46,7 @@ describe('handler/shipElasticsearch.js', function() {
         var es = require('elasticsearch');
         es.Client = function(config) {
           assert.strictEqual(config.host, 'http://mock', 'host param provided');
+          assert.strictEqual(config.httpAuth, undefined, 'httpAuth param not provided');
           return {
             bulk: function(params, callback) {
               if (params.body[1].value === '1') {
