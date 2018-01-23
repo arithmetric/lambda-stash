@@ -34,6 +34,8 @@ an AWS Elasticsearch domain.
 script runs the first time. Review the logs to make sure the script finishes
 successfully within the time allowed. You can set up a CloudWatch Alarm to be
 notified if an error occurs and to track for how long the function is running.
+The elasticsearch client timeout default is 30 seconds. You can set
+config.elasticsearch.requestTimeout to milliseconds or 'Infinity'.
 
 ## Configuration
 
@@ -270,6 +272,10 @@ signing the request.
 
 - `config.elasticsearch.maxChunkSize` (optional) is the maximum number of log
 items to ship in one request. By default, set to 1000.
+
+- `config.elasticsearch.requestTimeout` (optional) is the elasticsearch client
+timeout in milliseconds.  Elasticsearch's default is 30000 (30 seconds). Can
+also be set to 'Infinity'.
 
 ### shipHttp
 
