@@ -7,7 +7,7 @@
     "aws-sdk": "^2.3.18",
     "csv-parse": "^1.1.1",
     "elasticsearch": "^11.0.1",
-    "http-aws-es": "tphummel/http-aws-es",
+    "http-aws-es": "^2.0.5",
     "lodash": "^4.13.1"
   },
   "devDependencies": {
