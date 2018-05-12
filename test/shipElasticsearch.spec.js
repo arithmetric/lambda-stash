@@ -65,7 +65,8 @@ describe('handler/shipElasticsearch.js', function() {
             useAWS: true,
             region: 'us-east-1',
             accessKey: 'access_key',
-            secretKey: 'shh_secret'
+            secretKey: 'shh_secret',
+            requestTimeout: 90000
           },
           data: [
             {
@@ -85,6 +86,8 @@ describe('handler/shipElasticsearch.js', function() {
             'key param provided');
           assert.strictEqual(config.amazonES.secretKey, 'shh_secret',
             'secret param provided');
+          assert.strictEqual(config.requestTimeout, 90000,
+            'request timeout param provided');
           done();
         };
         handler.process(config);
