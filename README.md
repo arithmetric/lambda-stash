@@ -10,13 +10,13 @@ data sources to data stores, like Elasticsearch.
 ## Features
 
 - Supported input formats: AWS Cloudfront access logs, AWS Cloudtrail API logs,
-AWS CloudWatch logs, AWS Config change logs, and other formats by implementing
-a custom handler.
+AWS CloudWatch logs, AWS Config change logs, AWS Elastic Load Balancer access
+logs, and other formats by implementing a custom handler.
 
 - Supported output formats: JSON, plain text key-value pairs.
 
 - Supported shipping methods: Elasticsearch (includes signing for AWS domains),
-HTTP POST, TCP socket.
+HTTP/S POST, TCP socket.
 
 ## Set Up
 
@@ -25,7 +25,7 @@ with your configuration. See the example included (under `example/`) and the
 configuration documentation below to get started.
 
 2. Use the AWS Management Console to create a Lambda function using the Node.js
-4.3 runtime. Upload your package, configure it with event sources as desired
+6.10 runtime. Upload your package, configure it with event sources as desired
 (S3 buckets or CloudWatch logs). Be sure the Lambda function has an IAM role
 with any necessary permissions, like getting data from an S3 bucket or accessing
 an AWS Elasticsearch domain.
@@ -169,6 +169,46 @@ contain the log's date time value.
 
 - `config.data` is transformed to an array of objects with log data.
 
+### formatELBv1
+
+Processes parsed data from AWS Elastic Load Balancer (ELB) Classic Load Balancer
+(ELB version 1) logs and normalizes it in key-value objects.
+
+Raw ELB log files in S3 should be processed with `parseSpaces` before using this
+format handler.
+
+**Inputs**:
+
+- `config.data` should be an array (one item per log record) of arrays (one item
+per record field).
+
+- `config.dateField` (optional) is the key name in the output that should
+contain the log's date time value.
+
+**Outputs**:
+
+- `config.data` is transformed to an array of objects with log data.
+
+### formatELBv2
+
+Processes parsed data from AWS Elastic Load Balancer (ELB) Application Load
+Balancer (ELB version 2) logs and normalizes it in key-value objects.
+
+Raw ELB log files in S3 should be processed with `parseSpaces` before using this
+format handler.
+
+**Inputs**:
+
+- `config.data` should be an array (one item per log record) of arrays (one item
+per record field).
+
+- `config.dateField` (optional) is the key name in the output that should
+contain the log's date time value.
+
+**Outputs**:
+
+- `config.data` is transformed to an array of objects with log data.
+
 ### getS3Object
 
 Fetches an object from S3.
@@ -273,9 +313,9 @@ signing the request.
 - `config.elasticsearch.maxChunkSize` (optional) is the maximum number of log
 items to ship in one request. By default, set to 1000.
 
-- `config.elasticsearch.requestTimeout` (optional) is the elasticsearch client
-timeout in milliseconds.  Elasticsearch's default is 30000 (30 seconds). Can
-also be set to 'Infinity'.
+- `config.elasticsearch.requestTimeout` (optional) is the Elasticsearch client
+timeout in milliseconds or can be set to `Infinity` for no timeout. The
+Elasticsearch client's default is 30000 (30 seconds).
 
 ### shipHttp
 
