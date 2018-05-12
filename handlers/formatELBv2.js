@@ -1,22 +1,34 @@
 exports.process = function(config) {
-  console.log('formatELB');
+  console.log('formatELBv2 for Application Load Balancers');
+  if (!config.data ||
+      (!config.data.length && config.data.length !== 0)) {
+    return Promise.reject('Received unexpected ELB log format:' +
+      JSON.stringify(config.data));
+  }
+
   var output = [];
   var fields = [
+    'type',
     'timestamp',
     'elb',
     'client',
-    'backend',
+    'target',
     'request_processing_time',
-    'backend_processing_time',
+    'target_processing_time',
     'response_processing_time',
     'elb_status_code',
-    'backend_status_code',
+    'target_status_code',
     'received_bytes',
     'sent_bytes',
     'request',
     'user_agent',
     'ssl_cipher',
-    'ssl_protocol'
+    'ssl_protocol',
+    'target_group_arn',
+    'trace_id',
+    'domain_name',
+    'chosen_cert_arn',
+    'matched_rule_priority'
   ];
   var numRows = config.data.length;
   var numCols;
@@ -24,20 +36,18 @@ exports.process = function(config) {
   var j;
   var row;
   var item;
-  var label;
 
   for (i = 0; i < numRows; i++) {
     row = config.data[i];
-    numCols = row.length;
-    if (numCols !== 15) {
-      console.log('Expected 15 columns in row. Found ' + numCols + ': ' +
-        row.join(' '));
+    if (row.length !== 21) {
+      console.log('Expected 21 columns in row. Found ' + row.length + ': ' +
+        config.data[i]);
     }
 
     item = {};
+    numCols = Math.min(row.length, fields.length);
     for (j = 0; j < numCols; j++) {
-      label = (j < fields.length) ? fields[j] : String(j);
-      item[label] = row[j];
+      item[fields[j]] = row[j];
     }
     if (config.dateField && config.dateField !== 'timestamp') {
       item[config.dateField] = item.timestamp;

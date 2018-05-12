@@ -11,8 +11,8 @@ describe('handler/parseSpaces.js', function() {
     var dataJson;
 
     before(function() {
-      dataSource = fs.readFileSync("test/assets/spaces.source.txt");
-      dataJson = JSON.parse(fs.readFileSync("test/assets/table.json"));
+      dataSource = fs.readFileSync("test/assets/elbv2.source.txt");
+      dataJson = JSON.parse(fs.readFileSync("test/assets/elbv2.parse.json"));
     });
 
     it('should parse space separated data',

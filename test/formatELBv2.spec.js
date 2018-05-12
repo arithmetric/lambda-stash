@@ -3,18 +3,18 @@
 var assert = require("assert");
 var fs = require("fs");
 
-var handler = require("../handlers/formatELB");
+var handler = require("../handlers/formatELBv2");
 
-describe('handler/formatELB.js', function() {
+describe('handler/formatELBv2.js', function() {
   describe('#process()', function() {
     var dataSource;
     var dataJson;
 
     before(function() {
       dataSource = JSON.parse(fs.readFileSync(
-        "test/assets/elb.parse.json"));
+        "test/assets/elbv2.parse.json"));
       dataJson = JSON.parse(fs.readFileSync(
-        "test/assets/elb.format.json"));
+        "test/assets/elbv2.format.json"));
     });
 
     it('should format parsed ELB data',
@@ -37,19 +37,14 @@ describe('handler/formatELB.js', function() {
     it('should fail if malformed ELB data is provided',
       function(done) {
         var config = {
-          data: dataJson,
+          data: {malformed: 'data'},
           setting: true
         };
-        try {
-          handler.process(config)
-            .catch(function(err) {
-              assert.ok(err, 'error is thrown');
-              done();
-            });
-        } catch (e) {
-          assert.ok(e, 'error is thrown');
-          done();
-        }
+        handler.process(config)
+          .catch(function(err) {
+            assert.ok(err, 'error is thrown');
+            done();
+          });
       });
   });
 });
