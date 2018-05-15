@@ -1,8 +1,8 @@
 language: node_js
 node_js:
   - 4.3
-  - 6.10
-  - 8.10
+  - '6.10'
+  - '8.10'
 matrix:
   allow_failures:
   - node_js: 4.3
