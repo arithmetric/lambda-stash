@@ -1,6 +1,6 @@
 {
   "name": "lambda-stash",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "AWS Lambda script for shipping data from S3 or other cloud data sources to data stores, like Elasticsearch",
   "main": "index.js",
   "dependencies": {
