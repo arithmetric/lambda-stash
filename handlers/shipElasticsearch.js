@@ -7,6 +7,10 @@ exports.process = function(config) {
     host: config.elasticsearch.host
   };
 
+  if (config.elasticsearch.requestTimeout) {
+    esConfig.requestTimeout = config.elasticsearch.requestTimeout;
+  }
+
   if (config.elasticsearch.useAWS) {
     esConfig.connectionClass = require('http-aws-es');
     esConfig.amazonES = {
