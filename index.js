@@ -4,6 +4,13 @@ exports.handler = function(config, event, context, callback) {
   var taskNames = [];
   var eventType = '';
 
+  // Check if S3 trigger is coming from SQS
+  if (event.hasOwnProperty('Records') && event.Records.length &&
+      event.Records[0].eventSource === 'aws:sqs' ) {
+    console.log('Extracting event from SQS');
+    event = JSON.parse(event.Records[0].body);
+  }
+
   if (event.hasOwnProperty('Records') && event.Records.length &&
       event.Records[0].eventSource === 'aws:s3') {
     config.S3 = {
@@ -44,7 +51,8 @@ exports.handler = function(config, event, context, callback) {
 
   if (!currentMapping) {
     console.log('Event did not match any mappings.');
-    return callback(null, 'Event did not match any mappings.');
+    console.log('Event:' + JSON.stringify(event))
+    return callback(null, 'Event did not match any mappings3.' +  JSON.stringify(config));
   }
 
   console.log('Running ' + taskNames.length + ' handlers with config:', config);
