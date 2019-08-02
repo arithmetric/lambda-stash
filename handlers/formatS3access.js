@@ -53,10 +53,9 @@ exports.process = function(config) {
     for (j = 0; j < numCols; j++) {
       item[fields[j]] = row[j];
     }
-    item.time = item.time.replace(/\:/,' ').replace(/\[/,'');
-    item.zone = item.zone.replace(/\]/,'');
+    item.time = item.time.replace(/:/, ' ').replace(/\[/, '');
+    item.zone = item.zone.replace(/\]/, '');
     item[config.dateField] = new Date(item.time + item.zone);
-    
     output.push(item);
   }
   config.data = output;
