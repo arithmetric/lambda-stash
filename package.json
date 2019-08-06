@@ -1,6 +1,6 @@
 {
   "name": "lambda-stash",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "AWS Lambda script for shipping data from S3 or other cloud data sources to data stores, like Elasticsearch",
   "main": "index.js",
   "dependencies": {
@@ -19,7 +19,7 @@
     "nyc": "^14.1.1"
   },
   "engines": {
-    "node": ">=4.0"
+    "node": ">=6.0"
   },
   "scripts": {
     "check-coverage": "nyc --check-coverage --statements=100 --reporter=lcov --reporter=text-summary npm run test",

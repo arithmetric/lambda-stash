@@ -11,7 +11,7 @@ data sources to data stores, like Elasticsearch.
 
 - Supported input formats: AWS Cloudfront access logs, AWS Cloudtrail API logs,
 AWS CloudWatch logs, AWS Config change logs, AWS Elastic Load Balancer access
-logs, and other formats by implementing a custom handler.
+logs, AWS S3 access logs, and other formats by implementing a custom handler.
 
 - Supported output formats: JSON, plain text key-value pairs.
 
@@ -25,7 +25,7 @@ with your configuration. See the example included (under `example/`) and the
 configuration documentation below to get started.
 
 2. Use the AWS Management Console to create a Lambda function using the Node.js
-6.10 runtime. Upload your package, configure it with event sources as desired
+10.x runtime. Upload your package, configure it with event sources as desired
 (S3 buckets or CloudWatch logs). Be sure the Lambda function has an IAM role
 with any necessary permissions, like getting data from an S3 bucket or accessing
 an AWS Elasticsearch domain.
@@ -195,6 +195,26 @@ Processes parsed data from AWS Elastic Load Balancer (ELB) Application Load
 Balancer (ELB version 2) logs and normalizes it in key-value objects.
 
 Raw ELB log files in S3 should be processed with `parseSpaces` before using this
+format handler.
+
+**Inputs**:
+
+- `config.data` should be an array (one item per log record) of arrays (one item
+per record field).
+
+- `config.dateField` (optional) is the key name in the output that should
+contain the log's date time value.
+
+**Outputs**:
+
+- `config.data` is transformed to an array of objects with log data.
+
+### formatS3Access
+
+Processes parsed data from AWS Simple Storage Service (S3) access logs and
+normalizes it in key-value objects.
+
+Raw S3 log files should be processed with `parseSpaces` before using this
 format handler.
 
 **Inputs**:

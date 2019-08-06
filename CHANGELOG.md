@@ -1,5 +1,10 @@
 # Change Log for lambda-stash
 
+## 3.0.0 [2019/08/06]
+
+- Adding support for the S3 access log format.
+- Dropping support for Node.js v4.
+
 ## 2.0.0 [2018/05/23]
 
 - Adding support for ELB Classic Load Balancer (elbv1) and Application Load
