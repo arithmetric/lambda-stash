@@ -1,5 +1,5 @@
 exports.process = function(config) {
-  console.log('formatS3access for S3 hosted application logs');
+  console.log('formatS3Access for S3 hosted application logs');
   if (!config.data ||
       (!config.data.length && config.data.length !== 0)) {
     return Promise.reject('Received unexpected S3 log format:' +
@@ -55,7 +55,7 @@ exports.process = function(config) {
     }
     item.time = item.time.replace(/:/, ' ').replace(/\[/, '');
     item.zone = item.zone.replace(/\]/, '');
-    item[config.dateField] = new Date(item.time + item.zone);
+    item[config.dateField] = new Date(item.time + item.zone).toISOString();
     output.push(item);
   }
   config.data = output;
