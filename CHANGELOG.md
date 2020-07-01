@@ -1,5 +1,11 @@
 # Change Log for lambda-stash
 
+## 4.0.0 [2020/07/01]
+
+- Fixing parsing of Cloudwatch Logs streamed to Lambda.
+- Updating dependencies to resolve security warnings.
+- Dropping support for Node.js v6.
+
 ## 3.0.0 [2019/08/06]
 
 - Adding support for the S3 access log format.

@@ -25,7 +25,7 @@ with your configuration. See the example included (under `example/`) and the
 configuration documentation below to get started.
 
 2. Use the AWS Management Console to create a Lambda function using the Node.js
-10.x runtime. Upload your package, configure it with event sources as desired
+12.x runtime. Upload your package, configure it with event sources as desired
 (S3 buckets or CloudWatch logs). Be sure the Lambda function has an IAM role
 with any necessary permissions, like getting data from an S3 bucket or accessing
 an AWS Elasticsearch domain.
