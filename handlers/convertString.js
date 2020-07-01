@@ -8,7 +8,8 @@ exports.process = function(config) {
 
   config.data = _.map(config.data, function(datum) {
     var parts = _.map(datum, function(value, key) {
-      key = key.replace('-', '_').replace(/\W/g, '');
+      key = String(key).replace('-', '_').replace(/\W/g, '');
+      value = String(value).replace(/\n/g, ' ');
       return key + '="' + value + '"';
     });
 

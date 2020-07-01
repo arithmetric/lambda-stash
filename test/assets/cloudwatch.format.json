@@ -2,7 +2,6 @@
   {
     "id":"1234567890",
     "timestamp":1466263061409,
-    "message":"START RequestId: abcdef-1234-5678-9012-abcdef Version: $LATEST\n",
     "logType": "start",
     "requestId": "abcdef-1234-5678-9012-abcdef",
     "lambdaVersion": "$LATEST",
@@ -29,8 +28,7 @@
     "timestamp":1466263061439,
     "date": "2016-06-18T15:17:41.439Z",
     "requestId": "abcdef-1234-5678-9012-abcdef",
-    "logType": "end",
-    "message":"END RequestId: abcdef-1234-5678-9012-abcdef\n"
+    "logType": "end"
   },
   {
     "id":"1234567894",
@@ -41,7 +39,6 @@
     "duration": "432.10",
     "durationBilled": "500",
     "memConfigured": "256",
-    "memUsed": "123",
-    "message":"REPORT RequestId: abcdef-1234-5678-9012-abcdef\tDuration: 432.10 ms\tBilled Duration: 500 ms \tMemory Size: 256 MB\tMax Memory Used: 123 MB\n"
+    "memUsed": "123"
   }
 ]
