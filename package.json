@@ -19,7 +19,7 @@
     "nyc": "^14.1.1"
   },
   "engines": {
-    "node": ">=6.0"
+    "node": ">=8.0"
   },
   "scripts": {
     "check-coverage": "nyc --check-coverage --statements=100 --reporter=lcov --reporter=text-summary npm run test",
