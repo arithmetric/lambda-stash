@@ -43,7 +43,9 @@ describe('handler/parseSpaces.js', function() {
 
     it('should fail if malformed space separated data is provided',
       function(done) {
-        handler.process({data: dataJson})
+        // An unclosed quote should throw an error when processed by csv-parse.
+        const badData = '"test test';
+        handler.process({data: badData})
           .catch(function(err) {
             assert.ok(err,
               'failure reported for malformed space separated data');

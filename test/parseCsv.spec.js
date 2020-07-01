@@ -30,7 +30,9 @@ describe('handler/parseCsv.js', function() {
 
     it('should fail if malformed CSV data is provided',
       function(done) {
-        handler.process({data: dataJson})
+        // An unclosed quote should throw an error when processed by csv-parse.
+        const badData = '"test test\t';
+        handler.process({data: badData})
           .catch(function(err) {
             assert.ok(err, 'failure reported for malformed CSV data');
             done();
