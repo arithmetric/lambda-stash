@@ -47,9 +47,21 @@ exports.process = function(config) {
   };
 
   _.forEach(config.data, function(datum) {
+    var indexName = config.elasticsearch.index;
+
+    // if date is available, build dynamic index: [index]-YYYY.MM.DD
+    if (config.dateField && datum[config.dateField]) {
+      var timestamp = new Date(datum[config.dateField]);
+      indexName = [
+        indexName + '-' + timestamp.getUTCFullYear(),    // year
+        ('0' + (timestamp.getUTCMonth() + 1)).slice(-2), // month
+        ('0' + timestamp.getUTCDate()).slice(-2)         // day
+      ].join('.');
+    }
+
     docs.push({
       index: {
-        _index: config.elasticsearch.index,
+        _index: indexName,
         _type: config.elasticsearch.type
       }
     });

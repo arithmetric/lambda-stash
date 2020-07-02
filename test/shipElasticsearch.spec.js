@@ -175,5 +175,55 @@ describe('handler/shipElasticsearch.js', function() {
             done();
           });
       });
+
+    it('should generate dynamic index name if date field is present',
+      function(done) {
+        var config = {
+          elasticsearch: {
+            index: 'index',
+            type: 'type',
+            useAWS: true,
+            region: 'us-east-1'
+          },
+          data: [
+            {
+              value: '1',
+              date: '2017-03-06T21:28:58.872Z'
+            },
+            {
+              value: '2'
+            }
+          ],
+          dateField: 'date'
+        };
+
+        var es = require('elasticsearch');
+        es.Client = function(config) {
+          assert.strictEqual(config.amazonES.credentials.envPrefix, 'AWS', 'environment credentials provided');
+          assert.strictEqual(config.amazonES.region, 'us-east-1', 'region param provided');
+
+          return {
+            // fake 'bulk' method to verify messages to Elasticsearch
+            bulk: function(docs, callback) {
+              assert.strictEqual(docs.body.length, 4, 'exactly two messages to Elasticsearch');
+
+              var messages = docs.body;
+              assert.strictEqual(messages[0].index._index, 'index-2017.03.06', 'dynamic index contains date');
+              assert.strictEqual(messages[0].index._type, 'type', 'type of the message passed along');
+              assert.strictEqual(messages[1].value, '1', 'value of the message passed along');
+              assert.strictEqual(messages[1].date, '2017-03-06T21:28:58.872Z', 'value of the message passed along');
+
+              assert.strictEqual(messages[2].index._index, 'index', 'index does not contain date');
+              assert.strictEqual(messages[2].index._type, 'type', 'type of the message passed along');
+              assert.strictEqual(messages[3].value, '2', 'value of the message passed along');
+
+              callback(null, 'success');
+              done();
+            }
+          };
+        };
+
+        handler.process(config);
+      });
   });
 });
