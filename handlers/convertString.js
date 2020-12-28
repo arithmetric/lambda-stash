@@ -7,9 +7,12 @@ exports.process = function(config) {
   }
 
   config.data = _.map(config.data, function(datum) {
+    var escapeChar = config.string && config.string.escapeChar ?
+      config.string.escapeChar : '\'';
+
     var parts = _.map(datum, function(value, key) {
       key = String(key).replace('-', '_').replace(/\W/g, '');
-      value = String(value).replace(/\n/g, ' ');
+      value = String(value).replace(/\n/g, ' ').replace(/"/g, escapeChar);
       return key + '="' + value + '"';
     });
 

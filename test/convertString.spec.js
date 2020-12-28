@@ -58,5 +58,42 @@ describe('handler/convertString.js', function() {
             done();
           });
       });
+
+    it('should escape double quote characters',
+      function(done) {
+        var config = {
+          data: [{test: 'this is "a" test.'}],
+          setting: true
+        };
+        dataString = "test=\"this is 'a' test.\"\n";
+        handler.process(config)
+          .then(function(result) {
+            assert.ok(result.hasOwnProperty('setting'),
+              'process returns config object');
+            assert.equal(result.data, dataString,
+              'converted to string with prefix and suffix successfully');
+            done();
+          });
+      });
+
+    it('should support a configurable escape character',
+      function(done) {
+        var config = {
+          data: [{test: 'this is "a" test.'}],
+          setting: true,
+          string: {
+            escapeChar: 'x'
+          }
+        };
+        dataString = "test=\"this is xax test.\"\n";
+        handler.process(config)
+          .then(function(result) {
+            assert.ok(result.hasOwnProperty('setting'),
+              'process returns config object');
+            assert.equal(result.data, dataString,
+              'converted to string with prefix and suffix successfully');
+            done();
+          });
+      });
   });
 });
