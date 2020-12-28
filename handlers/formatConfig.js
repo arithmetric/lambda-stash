@@ -1,10 +1,8 @@
-var _ = require('lodash');
-
 exports.process = function(config) {
   console.log('formatConfig');
   if (!config.data ||
       !config.data.hasOwnProperty('configurationItems') ||
-      _.isNil(config.data.configurationItems.length)) {
+      config.data.configurationItems.length == null) { // eslint-disable-line no-eq-null,eqeqeq
     return Promise.reject('Received unexpected AWS Config JSON format:' +
       JSON.stringify(config.data));
   }

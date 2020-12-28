@@ -7,8 +7,7 @@
     "aws-sdk": "^2.290.0",
     "csv-parse": "^4.10.1",
     "elasticsearch": "^15.5.0",
-    "http-aws-es": "^6.0.0",
-    "lodash": "^4.17.5"
+    "http-aws-es": "^6.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",

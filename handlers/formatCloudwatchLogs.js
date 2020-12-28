@@ -1,10 +1,8 @@
-var _ = require('lodash');
-
 exports.process = function(config) {
   console.log('formatCloudwatchLogs');
   if (!config.data ||
       !config.data.hasOwnProperty('logEvents') ||
-      _.isNil(config.data.logEvents.length)) {
+      config.data.logEvents.length == null) { // eslint-disable-line no-eq-null,eqeqeq
     return Promise.reject('Received unexpected AWS Cloudwatch Logs format:' +
       JSON.stringify(config.data));
   }

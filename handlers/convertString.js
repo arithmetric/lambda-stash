@@ -1,16 +1,14 @@
-var _ = require('lodash');
-
 exports.process = function(config) {
   console.log('convertString');
-  if (!_.isArray(config.data)) {
+  if (!Array.isArray(config.data)) {
     return Promise.reject('Non-array data passed to convertString.');
   }
 
-  config.data = _.map(config.data, function(datum) {
+  config.data = config.data.map(function(datum) {
     var escapeChar = config.string && config.string.escapeChar ?
       config.string.escapeChar : '\'';
 
-    var parts = _.map(datum, function(value, key) {
+    var parts = Object.entries(datum).map(function([key, value]) {
       key = String(key).replace('-', '_').replace(/\W/g, '');
       value = String(value).replace(/\n/g, ' ').replace(/"/g, escapeChar);
       return key + '="' + value + '"';

@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 exports.handler = function(config, event, context, callback) {
   var taskNames = [];
   var eventType = '';
@@ -25,8 +23,8 @@ exports.handler = function(config, event, context, callback) {
   }
 
   var currentMapping;
-  if (config.mappings) {
-    _.some(config.mappings, function(item) {
+  if (Array.isArray(config.mappings)) {
+    config.mappings.some(function(item) {
       if (item.type === eventType ||
           (config.S3 && item.bucket === config.S3.srcBucket)) {
         currentMapping = item;
@@ -34,9 +32,10 @@ exports.handler = function(config, event, context, callback) {
         if (item.hasOwnProperty('processors')) {
           taskNames = taskNames.concat(item.processors);
         }
-        config = _.merge({}, config, item);
+        config = Object.assign({}, config, item);
         return true;
       }
+      return false;
     });
     delete config.mappings;
   }
@@ -49,8 +48,8 @@ exports.handler = function(config, event, context, callback) {
   console.log('Running ' + taskNames.length + ' handlers with config:', config);
   var tasks = [];
   var processor;
-  _.some(taskNames, function(taskName) {
-    if (_.isFunction(taskName)) {
+  taskNames.some(function(taskName) {
+    if (taskName && typeof taskName === 'function') {
       tasks.push(taskName);
       return false;
     }
@@ -64,6 +63,7 @@ exports.handler = function(config, event, context, callback) {
     if (processor.hasOwnProperty('process')) {
       tasks.push(processor.process);
     }
+    return false;
   });
 
   console.log('Starting to run processor tasks...');

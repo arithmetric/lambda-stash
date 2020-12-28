@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 exports.process = function(config) {
   console.log('shipElasticsearch');
 
@@ -46,7 +44,7 @@ exports.process = function(config) {
     });
   };
 
-  _.forEach(config.data, function(datum) {
+  config.data.forEach(function(datum) {
     docs.push({
       index: {
         _index: config.elasticsearch.index,
